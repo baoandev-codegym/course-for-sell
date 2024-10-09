@@ -13,12 +13,14 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table (name = "roles")
-public class Role {
+@Table(name = "contents")
+public class Content {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
+    private String contentText;
+    private String contentVideo;
+    @ManyToMany(mappedBy = "contents")
+    private Set<Lesson> lessons;
 }
