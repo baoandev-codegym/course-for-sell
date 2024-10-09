@@ -15,9 +15,5 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class OrderController {
     private final IOrderService orderService;
-    @GetMapping
-    public ResponseEntity<?> getOrder(){
-        return new ResponseEntity<>(orderService.findAllOrder(), HttpStatus.OK);
-    }
 
 }

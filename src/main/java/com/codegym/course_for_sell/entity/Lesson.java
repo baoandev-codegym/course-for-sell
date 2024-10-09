@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -14,17 +13,17 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "orders")
-public class Order {
+@Table (name = "lessons")
+public class Lesson {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
-    private Float total;
-    private Date date;
-    private String status;
-    @ManyToMany(mappedBy = "orders")
+    private String name;
+    @ManyToMany(mappedBy = "lessons")
     private Set<Course> courses;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @ManyToMany
+    @JoinTable(name = "lessons_contents",
+            joinColumns = @JoinColumn(name = "lesson_id"),
+            inverseJoinColumns = @JoinColumn(name = "content_id"))
+    private Set<Content> contents;
 }
