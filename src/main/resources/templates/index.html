@@ -18,7 +18,7 @@
 <div class="d-flex" id="wrapper">
     <div class="bg-white" id="sidebar-wrapper">
         <div class="list-group list-group-flush my-3">
-            <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold ">
+            <a href="/courses" class="list-group-item list-group-item-action bg-transparent second-text fw-bold ">
                 <i class="fas fa-tachometer-alt me-2"></i> Khóa học
             </a>
             <a href="/categories" class="list-group-item list-group-item-action bg-transparent second-text fw-bold active">
@@ -142,7 +142,7 @@
                     document.getElementById("content").innerHTML += `
                 <tr>
                     <td>${i + 1}</td>
-                    <td>${data[i].content.name}</td>
+                    <td>${data.content[i].name}</td>
                     <td>
                         <button type="button" class="btn btn-primary" onclick="getDataById(${data.content[i].id})">
                           Sửa

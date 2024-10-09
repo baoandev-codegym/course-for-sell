@@ -20,10 +20,14 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Column(name = "description")
     private String content;
     private Double price;
-    private String image;
+    @Lob
+    private byte[] image;
 
+    @Getter
+    @Setter
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "category_id")

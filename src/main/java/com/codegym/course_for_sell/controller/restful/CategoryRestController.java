@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -19,6 +20,12 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CategoryRestController {
     private final ICategoryService categoryService;
+
+//    @GetMapping
+//    public ResponseEntity<List<Category>> findAll() {
+//        List<Category> categoryList = categoryService.findAllCategory();
+//        return new ResponseEntity<>(categoryList, HttpStatus.OK);
+//    }
 
     @GetMapping
     public ResponseEntity<Page<Category>> findAll(@PageableDefault(page = 0, size = 10,sort = "id",direction = Sort.Direction.DESC) Pageable pageable) {

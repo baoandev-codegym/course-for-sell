@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class CategoryDto {
+    private Long id;
     @NotEmpty(message = "Name must not empty")
     private String name;
 }

@@ -21,7 +21,7 @@ public class CategoryController {
     private final ICategoryService categoryService;
 
     @GetMapping
-    public ModelAndView showList(@PageableDefault Pageable pageable) {
+    public ModelAndView showList(@PageableDefault(size = 10) Pageable pageable) {
         ModelAndView modelAndView = new ModelAndView("category/list");
         modelAndView.addObject("categoryList", categoryService.findAll(pageable));
         return modelAndView;
