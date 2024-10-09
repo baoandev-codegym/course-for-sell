@@ -34,7 +34,7 @@ public class CourseController {
     }
 
     @GetMapping
-    public ModelAndView showList(@PageableDefault(size = 5) Pageable pageable) {
+    public ModelAndView showList(@PageableDefault(size = 4) Pageable pageable) {
         ModelAndView modelAndView = new ModelAndView("course/list");
         modelAndView.addObject("categories", categoryService.findAllCategory());
         modelAndView.addObject("courseList", courseService.findAllCourses(pageable));
@@ -72,13 +72,30 @@ public class CourseController {
     @GetMapping("{id}/edit")
     public ModelAndView showEditForm(@PathVariable Long id) {
         Optional<Course> course = courseService.findById(id);
-        return new ModelAndView("course/update", "course", course);
+        CreateCourseDto createCourseDto = new CreateCourseDto();
+        BeanUtils.copyProperties(course.get(), createCourseDto);
+        ModelAndView modelAndView = new ModelAndView("course/update");
+        modelAndView.addObject("course", createCourseDto);
+        modelAndView.addObject("categories", categoryService.findAllCategory());
+        return modelAndView;
     }
 
     @PostMapping("/update")
-    public ModelAndView update(Course course) {
-        courseService.save(course);
-        return new ModelAndView("redirect:/courses");
+    public String update(@ModelAttribute("course") @Validated CreateCourseDto createCourseDto,
+                       BindingResult bindingResult, Model model) throws Exception {
+        if (bindingResult.hasFieldErrors()) {
+            model.addAttribute("categories", categoryService.findAllCategory());
+            return "course/update";
+        } else {
+            Course course = new Course();
+            BeanUtils.copyProperties(createCourseDto, course);
+            course.setImage(createCourseDto.getImage().getBytes());
+            Category category = new Category();
+            category.setId(createCourseDto.getCategory().getId());
+            course.setCategory(category);
+            courseService.save(course);
+            return "redirect:/courses";
+        }
     }
 
     @GetMapping("{id}/delete")

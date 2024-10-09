@@ -11,12 +11,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "rates")
+@Table(name = "ratings")
 public class Rate {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
+    @Column(name = "stars")
     private int star;
     @ManyToOne
     @JoinColumn(name = "user_id")

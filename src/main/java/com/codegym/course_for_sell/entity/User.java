@@ -20,6 +20,7 @@ public class User {
     private Long id;
     private String password;
     private String email;
+    @Column(name = "fullname")
     private String fullName;
     private String phone;
     @ManyToMany

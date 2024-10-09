@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class CreateCourseDto {
+    private Long id;
     private String name;
     private String content;
     private Double price;
