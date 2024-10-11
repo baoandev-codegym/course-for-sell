@@ -65,6 +65,25 @@
                                 onclick="window.location.href='/courses/create'">Thêm mới
                         </button>
                     </div>
+                    <div class="mb-3 d-flex justify-content-between align-items-center">
+                        <form class="d-flex justify-content-between align-items-center" th:action="@{/courses}" method="get" style="width: 100%" onsubmit="clearEmptyFields()">
+
+                            <select class="form-control me-2" id="category" name="category" style="flex-grow: 1;" onchange="clearEmptyFields(); this.form.submit()">
+                                <option value="" th:selected="${selectedCategoryId == null}" disabled selected>Chọn danh mục</option>
+                                <option th:each="c : ${categories}"
+                                        th:value="${c.id}"
+                                        th:text="${c.name}"
+                                        th:selected="${c.id == selectedCategoryId}"></option>
+                            </select>
+                            <div class="form-outline" style="width: 40%">
+                                <input type="search" id="form1" name="course" class="form-control"
+                                       placeholder="Tìm kiếm khóa học" aria-label="Search"
+                                       th:value="${param.course}"/>
+                            </div>
+                            <button class="btn btn-primary ms-2" type="submit">Tìm kiếm</button>
+                        </form>
+                    </div>
+
                     <table class="table bg-white rounded shadow-sm table-hover">
                         <thead>
                         <tr>
@@ -171,6 +190,14 @@
                 });
             }
         });
+    }
+</script>
+<script>
+    function clearEmptyFields() {
+        const courseInput = document.getElementById('form1');
+        if (courseInput && courseInput.value.trim() === '') {
+            courseInput.name = '';
+        }
     }
 </script>
 <script type="text/javascript" th:src="@{/js/admin.js}"></script>

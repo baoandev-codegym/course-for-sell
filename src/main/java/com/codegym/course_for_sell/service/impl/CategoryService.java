@@ -40,4 +40,9 @@ public class CategoryService implements ICategoryService {
     public List<Category> findAllCategory() {
         return categoryRepository.findAll();
     }
+
+    @Override
+    public Page<Category> findCategoryByKeyword(String keyword, Pageable pageable) {
+        return categoryRepository.findCategoryByNameContaining(keyword, pageable);
+    }
 }

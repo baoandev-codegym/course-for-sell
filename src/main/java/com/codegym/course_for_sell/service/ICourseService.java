@@ -9,4 +9,10 @@ import java.util.List;
 
 public interface ICourseService extends IGenerateService<Course> {
     Page<CourseDto> findAllCourses(Pageable pageable);
+
+    Page<CourseDto> findCourseByName(String name, Pageable pageable);
+
+    Page<CourseDto> findCourseByCategory(Long categoryId, Pageable pageable);
+
+    Page<CourseDto> findCourseByNameAndCategory(String name, Long categoryId, Pageable pageable);
 }
