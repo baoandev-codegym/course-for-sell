@@ -65,6 +65,15 @@
                                 onclick="window.location.href='/categories/create'">Thêm mới
                         </button>
                     </div>
+                    <div class="mb-3">
+                        <form class="form-inline">
+                            <div class="form-outline" data-mdb-input-init>
+                                <input type="search" id="form1" name="keyword"
+                                       class="form-control" placeholder="Tìm kiếm danh mục" aria-label="Search"
+                                       th:value="${param.category}"/>/>
+                            </div>
+                        </form>
+                    </div>
                     <table class="table bg-white rounded shadow-sm table-hover">
                         <thead>
                         <tr>

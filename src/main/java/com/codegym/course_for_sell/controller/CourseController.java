@@ -1,6 +1,5 @@
 package com.codegym.course_for_sell.controller;
 
-import com.codegym.course_for_sell.dto.CategoryDto;
 import com.codegym.course_for_sell.dto.CourseDto;
 import com.codegym.course_for_sell.dto.CreateCourseDto;
 import com.codegym.course_for_sell.entity.Category;
@@ -34,10 +33,26 @@ public class CourseController {
     }
 
     @GetMapping
-    public ModelAndView showList(@PageableDefault(size = 4) Pageable pageable) {
+    public ModelAndView showList(@PageableDefault(size = 4) Pageable pageable,
+                                 @RequestParam(value = "course", required = false) String name,
+                                 @RequestParam(value = "category", required = false) Long categoryId) {
+
         ModelAndView modelAndView = new ModelAndView("course/list");
+        Page<CourseDto> courseList;
+
+        if (name != null && categoryId != null) {
+            courseList = courseService.findCourseByNameAndCategory(name, categoryId, pageable);
+        } else if (name != null) {
+            courseList = courseService.findCourseByName(name, pageable);
+        } else if (categoryId != null) {
+            courseList = courseService.findCourseByCategory(categoryId, pageable);
+        } else {
+            courseList = courseService.findAllCourses(pageable);
+        }
+
+        modelAndView.addObject("courseList", courseList);
         modelAndView.addObject("categories", categoryService.findAllCategory());
-        modelAndView.addObject("courseList", courseService.findAllCourses(pageable));
+        modelAndView.addObject("selectedCategoryId", categoryId);
         return modelAndView;
     }
 

@@ -4,6 +4,7 @@ import com.codegym.course_for_sell.dto.CategoryDto;
 import com.codegym.course_for_sell.entity.Category;
 import com.codegym.course_for_sell.service.ICategoryService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -21,9 +22,14 @@ public class CategoryController {
     private final ICategoryService categoryService;
 
     @GetMapping
-    public ModelAndView showList(@PageableDefault(size = 10) Pageable pageable) {
+    public ModelAndView showList(@PageableDefault(size = 10) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword) {
         ModelAndView modelAndView = new ModelAndView("category/list");
-        modelAndView.addObject("categoryList", categoryService.findAll(pageable));
+        if (keyword != null) {
+            Page<Category> categories = categoryService.findCategoryByKeyword(keyword, pageable);
+            modelAndView.addObject("categoryList", categories);
+        } else {
+            modelAndView.addObject("categoryList", categoryService.findAll(pageable));
+        }
         return modelAndView;
     }
 
@@ -36,7 +42,7 @@ public class CategoryController {
 
     @PostMapping("/save")
     public ModelAndView save(@ModelAttribute("category")
-                                 @Validated CategoryDto category, BindingResult bindingResult) {
+                             @Validated CategoryDto category, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView("category/create");
             return modelAndView;
